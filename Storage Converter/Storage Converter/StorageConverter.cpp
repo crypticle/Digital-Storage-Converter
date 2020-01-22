@@ -11,17 +11,76 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
+#include <map>
 using namespace std;
 
-const int oneMb = 0;
+static enum StorageUnit { // Value definitions of the data storage units.
+	evNotDefined, b, B, KB, MB, GB, Kb, Mb, Gb
+};
+
+static map<string, StorageUnit> s_mapStorageUnit; // Map to associate strings with the enum values.
+
+static void Initialize();
+
+const int oneByte = 8; // 1 byte (B) is equal 8 bits (bit)
+const int oneKilobit = 1024;
+const int oneKilobyte = 1024;
+const int oneGigabyte = 1024; // 1 gigabyte(GB) is equal 1024 megabytes(MB)
 
 int main()
 {
+	Initialize();
 	string userString;
-	int count = 0;
+	string userUnit;
+	size_t pos;
+
 	cout << "Enter an amount of physical storage (e.g. 500 GB): ";
-	cin >> userString;
+	cout.flush();
+	getline(cin, userString);
+	pos = userString.find(" "); // Finds the position of the space in variable "userString".
 	float userNum = stoi(userString); // Parses string to integer. (e.g. converts string "10xyz" to integer 10).
+	userUnit = userString.substr(pos + 1); // Extracts everything after the space and save it to variable "userUnit".
+	
+	if (userUnit.length() > 2)
+	{
+		cout << "Invalid storage format!";
+	}
+	else
+	{
+		switch (s_mapStorageUnit[userUnit])
+		{
+		case b:
+			cout << "bits detected" << endl;
+			break;
+		case B:
+			cout << "Bytes detected" << endl;
+			break;
+		case KB:
+			cout << "Kilobytes detected" << endl;
+			break;
+		case MB:
+			cout << "Megabytes detected" << endl;
+			break;
+		case GB:
+			cout << "Gigabytes detected" << endl;
+			break;
+		case Kb:
+			cout << "Kilobits detected" << endl;
+			break;
+		case Mb:
+			cout << "Megabits detected" << endl;
+			break;
+		case Gb:
+			cout << "Gigabits detected" << endl;
+			break;
+		default:
+			cout << "No storage Unit detected" << endl;
+		}
+	}
+
+
+
+
 
 	/* Second half of String
 	 1. Separate string by space
@@ -38,3 +97,17 @@ int main()
 
 }
 
+void Initialize()
+{
+	s_mapStorageUnit["b"] = b;
+	s_mapStorageUnit["B"] = B;
+	s_mapStorageUnit["KB"] = KB;
+	s_mapStorageUnit["MB"] = MB;
+	s_mapStorageUnit["GB"] = GB;
+	s_mapStorageUnit["Kb"] = Kb;
+	s_mapStorageUnit["Mb"] = Mb;
+	s_mapStorageUnit["Gb"] = Gb;
+
+}
+
+// Sources : https://www.codeguru.com/cpp/cpp/cpp_mfc/article.php/c4067/Switch-on-Strings-in-C.htm
