@@ -20,3 +20,7 @@ Additionally, indicate to the user how many bits are needed to address the amoun
 Your program must be able to detect the units supplied by the user by parsing the input string.
 
 Your program may be written in any language. Your program should use an appropriate data type that has the ability to store large numbers (for the bits calculation), but you do not need to accept an input more than 1152921504 GB for the purposes of this assignment.
+
+
+Created By Calvin Le
+1/22/2020
